@@ -40,21 +40,29 @@ export default function Navbar() {
             : "border border-white/5 bg-white/5 backdrop-blur-xl"
         }`}
       >
-        <div
-          className={`flex items-center justify-between px-8 transition-all duration-300 ${
-            scrolled ? "h-16" : "h-20"
-          }`}
-        >
+  <div
+  className={`flex items-center justify-between px-4 md:px-8 transition-all duration-300 ${
+    scrolled ? "h-16" : "h-20"
+  }`}
+>
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo2.png"
-              alt="SABRIKA"
-              width={60}
-              height={60}
-              priority
-              className="transition-transform duration-300 hover:rotate-6 hover:scale-110"
-            />
+          <Image
+  src="/logo2.png"
+  alt="SABRIKA"
+  width={52}
+  height={52}
+  priority
+  className="h-10 w-10 md:h-14 md:w-14 object-contain transition-transform duration-300 hover:rotate-6 hover:scale-110"
+/>
+
+<span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-lg md:text-2xl font-black tracking-wide text-transparent whitespace-nowrap">
+  SABRIKA
+</span>
+
+<span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-lg md:text-2xl font-black tracking-wide text-transparent whitespace-nowrap">
+  SABRIKA
+</span>
 
             <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-2xl font-black tracking-wide text-transparent">
               SABRIKA
@@ -91,8 +99,7 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             className="text-white lg:hidden"
           >
-            {open ? <X size={30} /> : <Menu size={30} />}
-          </button>
+{open ? <X size={28} /> : <Menu size={28} />}          </button>
         </div>
 
         {/* Mobile Menu */}
