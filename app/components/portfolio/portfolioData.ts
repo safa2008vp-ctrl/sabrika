@@ -7,9 +7,9 @@ export interface Project {
     description: string;
     color: string;
   
-    year: string;
-    client: string;
-    services: string[];
+    year?: string;
+    client?: string;
+    services?: string[];
   }
   
   export const categories = [
