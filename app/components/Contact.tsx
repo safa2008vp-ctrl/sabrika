@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 
 export default function Contact() {
-  // حالة تخزين بيانات الخانات
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,31 +18,25 @@ export default function Contact() {
     message: "",
   });
 
-  // تحديث القيم عند كتابة المستخدم
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // دالة الإرسال إلى الواتساب
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // تجهيز نص الواتساب ديناميكياً
+  const phoneNumber = "9647763753457";
+  const rawText = 
+`مرحباً، لدي طلب جديد من الموقع:
 
-    const phoneNumber = "9647763753457"; // رقم الواتساب الخاص بك
+👤 *الاسم الكامل:* ${formData.name || "غير محدد"}
+📧 *البريد الإلكتروني:* ${formData.email || "غير محدد"}
+📞 *رقم الهاتف:* ${formData.phone || "غير محدد"}
+💬 *الرسالة:* ${formData.message || "بدون رسالة"}`;
 
-    // صياغة نص الرسالة
-    const textMessage = `مرحباً، لدي طلب جديد من الموقع:%0A%0A` +
-      `👤 *الاسم الكامل:* ${formData.name}%0A` +
-      `📧 *البريد الإلكتروني:* ${formData.email}%0A` +
-      `📞 *رقم الهاتف:* ${formData.phone}%0A` +
-      `💬 *الرسالة:* ${formData.message}`;
-
-    // فتح رابط الواتساب مباشر بالمعلومات
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${textMessage}`;
-    window.open(whatsappUrl, "_blank");
-  };
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(rawText)}`;
 
   return (
     <section
@@ -87,12 +80,11 @@ export default function Contact() {
             className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8"
           >
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-5">
 
               <input
                 type="text"
                 name="name"
-                required
                 placeholder="الاسم الكامل"
                 value={formData.name}
                 onChange={handleChange}
@@ -102,7 +94,6 @@ export default function Contact() {
               <input
                 type="email"
                 name="email"
-                required
                 placeholder="البريد الإلكتروني"
                 value={formData.email}
                 onChange={handleChange}
@@ -112,7 +103,6 @@ export default function Contact() {
               <input
                 type="tel"
                 name="phone"
-                required
                 placeholder="رقم الهاتف"
                 value={formData.phone}
                 onChange={handleChange}
@@ -122,22 +112,23 @@ export default function Contact() {
               <textarea
                 name="message"
                 rows={6}
-                required
                 placeholder="اكتب رسالتك..."
                 value={formData.message}
                 onChange={handleChange}
                 className="w-full rounded-2xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none resize-none focus:border-purple-500 transition"
               />
 
-              <button
-                type="submit"
-                className="w-full rounded-2xl bg-purple-600 hover:bg-purple-700 text-white py-4 font-bold flex items-center justify-center gap-3 transition-all cursor-pointer"
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full rounded-2xl bg-purple-600 hover:bg-purple-700 text-white py-4 font-bold flex items-center justify-center gap-3 transition-all"
               >
                 <Send size={20} />
                 إرسال الرسالة
-              </button>
+              </a>
 
-            </form>
+            </div>
 
           </motion.div>
 
