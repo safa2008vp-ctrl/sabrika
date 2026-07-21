@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -10,6 +11,40 @@ import {
 } from "lucide-react";
 
 export default function Contact() {
+  // حالة تخزين بيانات الخانات
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  // تحديث القيم عند كتابة المستخدم
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // دالة الإرسال إلى الواتساب
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const phoneNumber = "9647763753457"; // رقم الواتساب الخاص بك
+
+    // صياغة نص الرسالة
+    const textMessage = `مرحباً، لدي طلب جديد من الموقع:%0A%0A` +
+      `👤 *الاسم الكامل:* ${formData.name}%0A` +
+      `📧 *البريد الإلكتروني:* ${formData.email}%0A` +
+      `📞 *رقم الهاتف:* ${formData.phone}%0A` +
+      `💬 *الرسالة:* ${formData.message}`;
+
+    // فتح رابط الواتساب مباشر بالمعلومات
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${textMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section
       id="contact"
@@ -52,43 +87,57 @@ export default function Contact() {
             className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8"
           >
 
-            <div className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
 
               <input
                 type="text"
+                name="name"
+                required
                 placeholder="الاسم الكامل"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full rounded-2xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none focus:border-purple-500 transition"
               />
 
               <input
                 type="email"
+                name="email"
+                required
                 placeholder="البريد الإلكتروني"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full rounded-2xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none focus:border-purple-500 transition"
               />
 
               <input
-                type="text"
+                type="tel"
+                name="phone"
+                required
                 placeholder="رقم الهاتف"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full rounded-2xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none focus:border-purple-500 transition"
               />
 
               <textarea
+                name="message"
                 rows={6}
+                required
                 placeholder="اكتب رسالتك..."
+                value={formData.message}
+                onChange={handleChange}
                 className="w-full rounded-2xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none resize-none focus:border-purple-500 transition"
               />
 
-<a
-  href="https://wa.me/9647763753457"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-full rounded-2xl bg-purple-600 hover:bg-purple-700 py-4 font-bold flex items-center justify-center gap-3 transition-all"
->
+              <button
+                type="submit"
+                className="w-full rounded-2xl bg-purple-600 hover:bg-purple-700 text-white py-4 font-bold flex items-center justify-center gap-3 transition-all cursor-pointer"
+              >
                 <Send size={20} />
                 إرسال الرسالة
-                </a>
+              </button>
 
-            </div>
+            </form>
 
           </motion.div>
 
@@ -107,7 +156,8 @@ export default function Contact() {
 
             <div className="space-y-8">
 
-            <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center">
+              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">
+                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white">
                   <MapPin size={24} />
                 </div>
 
@@ -119,50 +169,53 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center">
+              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">
+                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white">
                   <Phone size={24} />
                 </div>
 
                 <div>
                   <p className="text-gray-400">الهاتف</p>
                   <a
-  href="tel:+9647763753457"
-  className="text-white hover:text-purple-400 transition"
->
-  +964 776 375 3457
-</a>
+                    href="tel:+9647763753457"
+                    className="text-white hover:text-purple-400 transition"
+                  >
+                    +964 776 375 3457
+                  </a>
                 </div>
               </div>
 
-              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center">
+              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">
+                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white">
                   <Mail size={24} />
                 </div>
 
                 <div>
                   <p className="text-gray-400">البريد الإلكتروني</p>
                   <a
-  href="mailto:safa2008vp@gmail.com"
-  className="text-white hover:text-purple-400 transition"
->
-  safa2008vp@gmail.com
-</a>
+                    href="mailto:safa2008vp@gmail.com"
+                    className="text-white hover:text-purple-400 transition"
+                  >
+                    safa2008vp@gmail.com
+                  </a>
                 </div>
               </div>
 
-              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center">
+              <div className="flex items-center gap-5 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-purple-500/20 hover:bg-white/5">
+                <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center text-white">
                   <Globe size={24} />
                 </div>
 
                 <div>
                   <p className="text-gray-400">الموقع الإلكتروني</p>
                   <a
-  href="https://www.sabrika.com"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="text-white hover:text-purple-400 transition"
->
-  www.sabrika.com
-</a>
+                    href="https://www.sabrika.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-purple-400 transition"
+                  >
+                    www.sabrika.com
+                  </a>
                 </div>
               </div>
 
