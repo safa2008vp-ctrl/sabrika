@@ -19,24 +19,29 @@ export default function Contact() {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // تجهيز نص الواتساب ديناميكياً
-  const phoneNumber = "9647763753457";
-  const rawText = 
-`مرحباً، لدي طلب جديد من الموقع:
+  const handleSendWhatsApp = () => {
+    const phoneNumber = "9647763753457";
 
-👤 *الاسم الكامل:* ${formData.name || "غير محدد"}
-📧 *البريد الإلكتروني:* ${formData.email || "غير محدد"}
-📞 *رقم الهاتف:* ${formData.phone || "غير محدد"}
-💬 *الرسالة:* ${formData.message || "بدون رسالة"}`;
+    const name = formData.name || "غير محدد";
+    const email = formData.email || "غير محدد";
+    const phone = formData.phone || "غير محدد";
+    const message = formData.message || "بدون رسالة";
 
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(rawText)}`;
+    const text = `مرحباً، لدي طلب جديد من الموقع:\n\n` +
+      `👤 *الاسم الكامل:* ${name}\n` +
+      `📧 *البريد الإلكتروني:* ${email}\n` +
+      `📞 *رقم الهاتف:* ${phone}\n` +
+      `💬 *الرسالة:* ${message}`;
+
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+  };
 
   return (
     <section
@@ -118,15 +123,14 @@ export default function Contact() {
                 className="w-full rounded-2xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none resize-none focus:border-purple-500 transition"
               />
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full rounded-2xl bg-purple-600 hover:bg-purple-700 text-white py-4 font-bold flex items-center justify-center gap-3 transition-all"
+              <button
+                type="button"
+                onClick={handleSendWhatsApp}
+                className="w-full rounded-2xl bg-purple-600 hover:bg-purple-700 text-white py-4 font-bold flex items-center justify-center gap-3 transition-all cursor-pointer"
               >
                 <Send size={20} />
                 إرسال الرسالة
-              </a>
+              </button>
 
             </div>
 
